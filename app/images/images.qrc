@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>AGL_MediaPlayer_BackArrow.svg</file>
+        <file>AGL_MediaPlayer_DividingLine.svg</file>
+        <file>AGL_MediaPlayer_ForwardArrow.svg</file>
+        <file>AGL_MediaPlayer_Loop_Active.svg</file>
+        <file>AGL_MediaPlayer_Loop_Inactive.svg</file>
+        <file>AGL_MediaPlayer_Player_Pause.svg</file>
+        <file>AGL_MediaPlayer_Player_Play.svg</file>
+        <file>AGL_MediaPlayer_Shuffle_Active.svg</file>
+        <file>AGL_MediaPlayer_Shuffle_Inactive.svg</file>
+    </qresource>
+</RCC>

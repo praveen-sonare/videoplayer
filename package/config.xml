@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="videoplayer" version="0.1">
+  <name>Video</name>
+  <icon src="icon.svg"/>
+  <content src="bin/videoplayer" type="application/vnd.agl.native"/>
+  <description>This is a demo videoplayer application</description>
+  <author>Tasuku Suzuki &lt;tasuku.suzuki@qt.io&gt;</author>
+  <license>APL 2.0</license>
+  <feature name="urn:AGL:widget:required-api">
+    <param name="windowmanager" value="ws"/>
+    <param name="homescreen" value="ws"/>
+    <param name="mediascanner" value="ws"/>
+  </feature>
+  <feature name="urn:AGL:widget:required-permission">
+    <param name="urn:AGL:permission::public:no-htdocs" value="required"/>
+    <param name="http://tizen.org/privilege/internal/dbus" value="required" />
+  </feature>
+</widget>
+
+
