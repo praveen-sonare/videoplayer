@@ -63,123 +63,126 @@ ApplicationWindow {
             Layout.fillHeight: true
             Layout.preferredHeight: 1080
             clip: true
+
             VideoOutput {
                 source: player
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.bottom: controls.top
+                anchors.fill: parent
                 Rectangle {
                     anchors.fill: parent
                     color: 'black'
                     opacity: 0.75
                     z: -1
                 }
-            }
 
-            Item {
-                id: controls
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                height: 307
-                Rectangle {
+                MouseArea{
                     anchors.fill: parent
-                    color: 'black'
-                    opacity: 0.75
+                    onClicked:{
+                        controls.visible = !controls.visible;
+                    }
                 }
 
-                ColumnLayout {
-                    anchors.fill: parent
-                    anchors.margins: root.width * 0.02
-                    Item {
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        Row {
-                            spacing: 20
-                            ToggleButton {
-                                id: random
-                                offImage: './images/AGL_MediaPlayer_Shuffle_Inactive.svg'
-                                onImage: './images/AGL_MediaPlayer_Shuffle_Active.svg'
-                            }
-                            ToggleButton {
-                                id: loop
-                                offImage: './images/AGL_MediaPlayer_Loop_Inactive.svg'
-                                onImage: './images/AGL_MediaPlayer_Loop_Active.svg'
-                            }
-                        }
-                        ColumnLayout {
-                            anchors.fill: parent
-                            Label {
-                                id: title
-                                Layout.alignment: Layout.Center
-                                text: player.metaData.title ? player.metaData.title : ''
-                                horizontalAlignment: Label.AlignHCenter
-                                verticalAlignment: Label.AlignVCenter
-                            }
-                            Label {
-                                id: artist
-                                Layout.alignment: Layout.Center
-                                text: player.metaData.author ? player.metaData.author : ''
-                                horizontalAlignment: Label.AlignHCenter
-                                verticalAlignment: Label.AlignVCenter
-                                font.pixelSize: title.font.pixelSize * 0.6
-                            }
-                        }
-                    }
-                    Slider {
-                        id: slider
-                        Layout.fillWidth: true
-                        to: player.duration
-                        Label {
-                            id: position
-                            anchors.left: parent.left
-                            anchors.bottom: parent.top
-                            font.pixelSize: 32
-                            text: player.time2str(player.position)
-                        }
-                        Label {
-                            id: duration
-                            anchors.right: parent.right
-                            anchors.bottom: parent.top
-                            font.pixelSize: 32
-                            text: player.time2str(player.duration)
-                        }
-                        onPressedChanged: player.seek(value)
-                    }
-                    RowLayout {
-                        Layout.fillHeight: true
-                        Item { Layout.fillWidth: true }
-                        ImageButton {
-                            offImage: './images/AGL_MediaPlayer_BackArrow.svg'
-                            onClicked: playlist.previous()
-                        }
-                        ImageButton {
-                            id: play
-                            offImage: './images/AGL_MediaPlayer_Player_Play.svg'
-                            onClicked: player.play()
-                            states: [
-                                State {
-                                    when: player.playbackState === MediaPlayer.PlayingState
-                                    PropertyChanges {
-                                        target: play
-                                        offImage: './images/AGL_MediaPlayer_Player_Pause.svg'
-                                        onClicked: player.pause()
-                                    }
-                                }
-                            ]
-                        }
-                        ImageButton {
-                            offImage: './images/AGL_MediaPlayer_ForwardArrow.svg'
-                            onClicked: playlist.next()
-                        }
+                Item {
+                    id: controls
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    visible: false
+                    height: 240
+                    z: 100
 
-                        Item { Layout.fillWidth: true }
+                    ColumnLayout {
+                        anchors.fill: parent
+                        anchors.margins: 5
+                        Item {
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            Row {
+                                spacing: 20
+                                ToggleButton {
+                                    id: random
+                                    offImage: './images/AGL_MediaPlayer_Shuffle_Inactive.svg'
+                                    onImage: './images/AGL_MediaPlayer_Shuffle_Active.svg'
+                                }
+                                ToggleButton {
+                                    id: loop
+                                    offImage: './images/AGL_MediaPlayer_Loop_Inactive.svg'
+                                    onImage: './images/AGL_MediaPlayer_Loop_Active.svg'
+                                }
+                            }
+                            ColumnLayout {
+                                anchors.fill: parent
+                                Label {
+                                    id: title
+                                    Layout.alignment: Layout.Center
+                                    text: player.metaData.title ? player.metaData.title : ''
+                                    horizontalAlignment: Label.AlignHCenter
+                                    verticalAlignment: Label.AlignVCenter
+                                }
+                                Label {
+                                    id: artist
+                                    Layout.alignment: Layout.Center
+                                    text: player.metaData.author ? player.metaData.author : ''
+                                    horizontalAlignment: Label.AlignHCenter
+                                    verticalAlignment: Label.AlignVCenter
+                                    font.pixelSize: title.font.pixelSize * 0.6
+                                }
+                            }
+                        }
+                        Slider {
+                            id: slider
+                            Layout.fillWidth: true
+                            to: player.duration
+                            Label {
+                                id: position
+                                anchors.left: parent.left
+                                anchors.bottom: parent.top
+                                font.pixelSize: 24
+                                text: player.time2str(player.position)
+                            }
+                            Label {
+                                id: duration
+                                anchors.right: parent.right
+                                anchors.bottom: parent.top
+                                font.pixelSize: 24
+                                text: player.time2str(player.duration)
+                            }
+                            onPressedChanged: player.seek(value)
+                        }
+                        RowLayout {
+                            Layout.fillHeight: true
+                            Item { Layout.fillWidth: true }
+                            ImageButton {
+                                offImage: './images/AGL_MediaPlayer_BackArrow.svg'
+                                onClicked: playlist.previous()
+                            }
+                            ImageButton {
+                                id: play
+                                offImage: './images/AGL_MediaPlayer_Player_Play.svg'
+                                onClicked: player.play()
+                                states: [
+                                    State {
+                                        when: player.playbackState === MediaPlayer.PlayingState
+                                        PropertyChanges {
+                                            target: play
+                                            offImage: './images/AGL_MediaPlayer_Player_Pause.svg'
+                                            onClicked: player.pause()
+                                        }
+                                    }
+                                ]
+                            }
+                            ImageButton {
+                                offImage: './images/AGL_MediaPlayer_ForwardArrow.svg'
+                                onClicked: playlist.next()
+                            }
+
+                            Item { Layout.fillWidth: true }
+                        }
                     }
                 }
             }
         }
         Item {
+            id: playlistArea
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.preferredHeight: 407
@@ -227,6 +230,15 @@ ApplicationWindow {
                     opacity: 0.25
                 }
             }
+        }
+    }
+
+    
+    function changeArea(area) {
+        if (area === 'normal') {
+            playlistArea.visible = true;
+        } else {
+            playlistArea.visible = false;
         }
     }
 }

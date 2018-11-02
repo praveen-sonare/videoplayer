@@ -1,7 +1,10 @@
 TARGET = videoplayer
-QT = quick aglextras multimedia
+QT = quickcontrols2 multimedia
 
 SOURCES = main.cpp
+
+CONFIG += link_pkgconfig
+PKGCONFIG += libhomescreen qlibwindowmanager
 
 RESOURCES += \
     videoplayer.qrc \

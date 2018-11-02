@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" id="videoplayer" version="0.1">
-  <name>Video</name>
+<widget xmlns="http://www.w3.org/ns/widgets" id="video" version="0.1">
+  <name>video</name>
   <icon src="icon.svg"/>
   <content src="bin/videoplayer" type="application/vnd.agl.native"/>
   <description>This is a demo videoplayer application</description>
