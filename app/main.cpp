@@ -112,7 +112,14 @@ int main(int argc, char* argv[]) {
         hs->set_event_handler(
             LibHomeScreen::Event_TapShortcut, [qwm, role](json_object* object) {
                 qDebug("Surface Video got tapShortcut\n");
-                qwm->activateSurface(role);
+                struct json_object *obj_param = nullptr, *obj_area = nullptr;
+                if(json_object_object_get_ex(object, "parameter", &obj_param)
+                && json_object_object_get_ex(obj_param, "area", &obj_area)) {
+                    qwm->activateWindow(role, json_object_get_string(obj_area));
+                }
+                else {
+                    qwm->activateWindow(role, "normal");
+                }
             });
 
         // Set the event handler for Event_Restriction which will allocate or
