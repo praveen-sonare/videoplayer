@@ -36,6 +36,8 @@ int main(int argc, char* argv[]) {
     // return app.exec();
 
     QString role = QString("Video");
+    bool isVisible = false;
+    bool isRestrict = false;
     QGuiApplication app(argc, argv);
 
     app.setApplicationName("VideoPlayer");
@@ -122,20 +124,40 @@ int main(int argc, char* argv[]) {
                 }
             });
 
-        // Set the event handler for Event_Restriction which will allocate or
-        // release restriction area for homescreen
         qwm->set_event_handler(
-            QLibWindowmanager::Event_LightstatusBrakeOff,
-            [hs, &area](json_object* object) {
-                qDebug() << "Event_LightstatusBrakeOff!";
-                hs->allocateRestriction(area.toStdString().c_str());
+            QLibWindowmanager::Event_Visible,
+            [&isVisible](json_object* object) {
+                qDebug() << "Surface Video got Event_Visible!";
+                isVisible = true;
             });
 
         qwm->set_event_handler(
-            QLibWindowmanager::Event_LightstatusBrakeOn,
-            [hs, &area](json_object* object) {
-                qDebug() << "Event_LightstatusBrakeOn!";
-                hs->releaseRestriction(area.toStdString().c_str());
+            QLibWindowmanager::Event_Invisible,
+            [&isVisible](json_object* object) {
+                qDebug() << "Surface Video got Event_Invisible!";
+                isVisible = true;
+            });
+
+        // Set the event handler for Event_Restriction which will allocate or
+        // release restriction area for homescreen
+        qwm->set_event_handler(
+            QLibWindowmanager::Event_CarRun,
+            [hs, &area, &isVisible, &isRestrict](json_object* object) {
+                qDebug() << "Surface Video got Event_CarRun!";
+                if(isVisible){
+                    hs->allocateRestriction(area.toStdString().c_str());
+                    isRestrict = true;
+                }
+            });
+
+        qwm->set_event_handler(
+            QLibWindowmanager::Event_CarStop,
+            [hs, &area, &isRestrict](json_object* object) {
+                qDebug() << "Surface Video got Event_CarStop!";
+                if(isRestrict){
+                    hs->releaseRestriction(area.toStdString().c_str());
+                    isRestrict = false;
+                }
             });
 
         QQuickWindow* window = qobject_cast<QQuickWindow*>(root);
