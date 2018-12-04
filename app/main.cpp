@@ -135,7 +135,7 @@ int main(int argc, char* argv[]) {
             QLibWindowmanager::Event_Invisible,
             [&isVisible](json_object* object) {
                 qDebug() << "Surface Video got Event_Invisible!";
-                isVisible = true;
+                isVisible = false;
             });
 
         // Set the event handler for Event_Restriction which will allocate or
@@ -145,6 +145,7 @@ int main(int argc, char* argv[]) {
             [hs, &area, &isVisible, &isRestrict](json_object* object) {
                 qDebug() << "Surface Video got Event_CarRun!";
                 if(isVisible){
+                    qDebug() << "Surface Video send allocateRestriction!";
                     hs->allocateRestriction(area.toStdString().c_str());
                     isRestrict = true;
                 }
@@ -155,6 +156,7 @@ int main(int argc, char* argv[]) {
             [hs, &area, &isRestrict](json_object* object) {
                 qDebug() << "Surface Video got Event_CarStop!";
                 if(isRestrict){
+                    qDebug() << "Surface Video send releaseRestriction!";
                     hs->releaseRestriction(area.toStdString().c_str());
                     isRestrict = false;
                 }
