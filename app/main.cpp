@@ -19,8 +19,8 @@
 int main(int argc, char *argv[])
 {
     AGLApplication app(argc, argv);
-    app.setApplicationName("VideoPlayer");
-    app.setupApplicationRole("Video");
+    app.setApplicationName("video");
+    app.setupApplicationRole("video");
     app.load(QUrl(QStringLiteral("qrc:/VideoPlayer.qml")));
     return app.exec();
 }
