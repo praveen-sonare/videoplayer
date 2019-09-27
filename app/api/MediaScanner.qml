@@ -83,10 +83,10 @@ WebSocket {
             case msgid.event:
                 var payload = JSON.parse(JSON.stringify(json[2]))
                 var event = payload.event
-                if (event == "mediascanner/media_added") {
+                if (event === "mediascanner/media_added") {
                     console.debug("Media playlist is updated")
                     root.add(json[2].data.Media)
-                } else if (event == "mediascanner/media_removed") {
+                } else if (event === "mediascanner/media_removed") {
                     root.remove(json[2].data.Path)
                 }
                 break
