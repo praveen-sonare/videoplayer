@@ -1,5 +1,5 @@
 TARGET = videoplayer
-QT = quick aglextras multimedia
+QT = quick websockets multimedia
 
 SOURCES = main.cpp
 
