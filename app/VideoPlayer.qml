@@ -18,24 +18,9 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 2.0
 import QtMultimedia 5.6
 import AGL.Demo.Controls 1.0
-import 'api' as API
 
 ApplicationWindow {
     id: root
-
-    API.MediaScanner {
-        id: scanner
-        url: bindingAddress
-
-        property var titles: Object
-        onAdded: {
-            playlist.addItem(media.path)
-            titles[media.path] = media.title
-        }
-        onRemoved: {
-            playlist.removeItem(index)
-        }
-    }
 
     MediaPlayer {
         id: player
@@ -206,7 +191,7 @@ ApplicationWindow {
                             Layout.fillWidth: true
                             Label {
                                 Layout.fillWidth: true
-                                text: scanner.titles[model.source] ? scanner.titles[model.source] : model.source.toString().split('/').reverse()[0]
+                                text: model.source.toString().split('/').reverse()[0]
                             }
                         }
                         Label {
